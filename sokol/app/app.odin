@@ -1468,6 +1468,8 @@ foreign sokol_app_clib {
     d3d11_get_depth_stencil_view :: proc() -> rawptr ---
     // Win32: get the HWND window handle
     win32_get_hwnd :: proc() -> rawptr ---
+    // CUSTOM Win32: call sokol's wndproc
+    win32_wndproc :: proc(hWnd: rawptr, uMsg: c.uint, wParam: uintptr, lParam: int) -> int ---
     // WebGPU: get WGPUDevice handle
     wgpu_get_device :: proc() -> rawptr ---
     // WebGPU: get swapchain's WGPUTextureView handle for rendering

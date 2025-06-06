@@ -1999,6 +1999,8 @@ SOKOL_APP_API_DECL const void* sapp_d3d11_get_resolve_view(void);
 SOKOL_APP_API_DECL const void* sapp_d3d11_get_depth_stencil_view(void);
 /* Win32: get the HWND window handle */
 SOKOL_APP_API_DECL const void* sapp_win32_get_hwnd(void);
+/* ADDED: call the sokol's win32 wndproc */
+SOKOL_APP_API_DECL const long long sapp_win32_wndproc(void* hWnd, uint32_t uMsg, uint64_t wParam, int64_t lParam);
 
 /* WebGPU: get WGPUDevice handle */
 SOKOL_APP_API_DECL const void* sapp_wgpu_get_device(void);
@@ -12341,6 +12343,15 @@ SOKOL_API_IMPL const void* sapp_win32_get_hwnd(void) {
     SOKOL_ASSERT(_sapp.valid);
     #if defined(_SAPP_WIN32)
         return _sapp.win32.hwnd;
+    #else
+        return 0;
+    #endif
+}
+
+SOKOL_API_IMPL const long long sapp_win32_wndproc(void* hWnd, unsigned int uMsg, unsigned long long wParam, long long lParam) {
+    SOKOL_ASSERT(_sapp.valid);
+    #if defined(_SAPP_WIN32)
+        return _sapp_win32_wndproc(hWnd, uMsg, wParam, lParam);
     #else
         return 0;
     #endif
